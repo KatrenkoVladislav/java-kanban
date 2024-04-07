@@ -1,4 +1,4 @@
-package model;
+package ru.yandex.javacource.katrenko.schedule.model;
 
 import java.util.Objects;
 

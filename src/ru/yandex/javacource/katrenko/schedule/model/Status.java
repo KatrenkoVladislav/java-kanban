@@ -1,4 +1,4 @@
-package model;
+package ru.yandex.javacource.katrenko.schedule.model;
 
 public enum Status {
     NEW,

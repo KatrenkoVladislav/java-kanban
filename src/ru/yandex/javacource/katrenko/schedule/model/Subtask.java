@@ -1,14 +1,15 @@
-package model;
+package ru.yandex.javacource.katrenko.schedule.model;
 
 public class Subtask extends Task {
-private Epic epic;
+    private int epicId;
 
-    public Subtask(String title, String description, Status status, Epic epic) {
+    public Subtask(String title, String description, Status status, int epicId) {
         super(title, description, status);
-        this.epic = epic;
+        this.epicId = epicId;
     }
-    public Epic getEpic() {
-        return epic;
+
+    public int getEpicId() {
+        return epicId;
     }
 
     @Override
@@ -17,7 +18,7 @@ private Epic epic;
                 "id=" + getId() +
                 ", title='" + getTitle() + '\'' +
                 ", description='" + getDescription() + '\'' +
-                ", status=" + status + '\'' +
+                ", status=" + status +
                 '}';
     }
 }
