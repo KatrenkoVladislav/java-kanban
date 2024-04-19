@@ -1,9 +1,13 @@
-package ru.yandex.javacource.katrenko.schedule.model;
+package model;
 
 import java.util.ArrayList;
 
 public class Epic extends Task {
     private ArrayList<Integer> subTasksId = new ArrayList<>();
+
+    public Epic(int id, String title, String description) {
+        super(id, title, description, Status.NEW);
+    }
 
     public Epic(String title, String description) {
 
@@ -23,7 +27,8 @@ public class Epic extends Task {
     }
 
     public void removeTask(int subtask) {
-        subTasksId.remove(subtask);
+        Integer subtask1 = subtask;
+        subTasksId.remove(subtask1);
     }
 
 

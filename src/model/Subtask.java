@@ -1,4 +1,4 @@
-package ru.yandex.javacource.katrenko.schedule.model;
+package model;
 
 public class Subtask extends Task {
     private int epicId;

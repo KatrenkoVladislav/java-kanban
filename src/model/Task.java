@@ -1,4 +1,4 @@
-package ru.yandex.javacource.katrenko.schedule.model;
+package model;
 
 import java.util.Objects;
 
@@ -7,6 +7,13 @@ public class Task {
     private String title;
     private String description;
     protected Status status;
+
+    public Task(int id, String title, String description, Status status) {
+        this.id = id;
+        this.title = title;
+        this.description = description;
+        this.status = status;
+    }
 
     public Task(String title, String description, Status status) {
         this.title = title;
