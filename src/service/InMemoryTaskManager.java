@@ -88,8 +88,9 @@ public class InMemoryTaskManager implements TaskManager {
 
     @Override
     public Subtask getSubTask(int id) {
+        final Subtask subtask = subTasks.get(id);
         historyManager.add(subTasks.get(id));
-        return subTasks.get(id);
+        return subtask;
     }
 
     @Override
@@ -146,8 +147,9 @@ public class InMemoryTaskManager implements TaskManager {
 
     @Override
     public Epic getEpic(int id) {
+        final Epic epic = epics.get(id);
         historyManager.add(epics.get(id));
-        return epics.get(id);
+        return epic;
     }
 
     @Override
