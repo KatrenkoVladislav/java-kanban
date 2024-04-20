@@ -42,4 +42,8 @@ public class Epic extends Task {
                 "} SubTask=" + subTasksId +
                 '}';
     }
+
+    public void setSubTasksId(ArrayList<Integer> subTasksId) {
+        this.subTasksId = subTasksId;
+    }
 }

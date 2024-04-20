@@ -8,11 +8,12 @@ import model.Task;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class InMemoryTaskManager implements TaskManager {
-    private HashMap<Integer, Task> tasks;
-    private HashMap<Integer, Subtask> subTasks;
-    private HashMap<Integer, Epic> epics;
+    private final Map<Integer, Task> tasks;
+    private final Map<Integer, Subtask> subTasks;
+    private final Map<Integer, Epic> epics;
     private final HistoryManager historyManager;
     private int seq = 0;
 
@@ -36,8 +37,9 @@ public class InMemoryTaskManager implements TaskManager {
 
     @Override
     public Task get(int id) {
-        historyManager.add(tasks.get(id));
-        return tasks.get(id);
+        final Task task = tasks.get(id);
+        historyManager.add(task);
+        return task;
     }
 
     @Override
@@ -128,12 +130,13 @@ public class InMemoryTaskManager implements TaskManager {
 
     @Override
     public void updateEpic(Epic epic) {
-        Epic saved = epics.get(epic.getId());
+        final Epic saved = epics.get(epic.getId());
         if (saved == null) {
             return;
         }
-        saved.setTitle(epic.getTitle());
-        saved.setDescription(epic.getDescription());
+        epic.setSubTasksId(saved.getSubtasks());
+        epic.setStatus(saved.getStatus());
+        epics.put(epic.getId(), epic);
     }
 
     @Override
@@ -173,7 +176,7 @@ public class InMemoryTaskManager implements TaskManager {
 
     @Override
     public ArrayList<Task> getHistory() {
-        return historyManager.getHistory();
+        return (ArrayList<Task>) historyManager.getHistory();
     }
 
     private int generateId() {

@@ -3,13 +3,18 @@ package service;
 import model.Task;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class InMemoryHistoryManager implements HistoryManager {
-    ArrayList<Task> history = new ArrayList<>();
+    private final List<Task> history = new ArrayList<>();
 
     @Override
     public void add(Task task) {
-        if (history.size() == 10) {
+        int size = 10;
+        if (task == null){
+            return;
+        }
+        if (history.size() == size) {
             history.removeFirst();
         }
         history.add(task);
@@ -17,6 +22,6 @@ public class InMemoryHistoryManager implements HistoryManager {
 
     @Override
     public ArrayList<Task> getHistory() {
-        return history;
+        return (ArrayList<Task>) history;
     }
 }
