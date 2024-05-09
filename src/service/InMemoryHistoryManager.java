@@ -6,8 +6,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class InMemoryHistoryManager implements HistoryManager {
-    private final List<Task> history = new ArrayList<>();
-    public static final int MAX_SIZE = 10;
+    private static class Node<T> {
+        private final T data;
+        private Node<T> next;
+        private Node<T> prev;
+
+
+        public Node(Node<T> prev, T data, Node<T> next) {
+            this.data = data;
+            this.next = next;
+            this.prev = prev;
+        }
+    }
+
     @Override
     public void add(Task task) {
         if (task == null){
