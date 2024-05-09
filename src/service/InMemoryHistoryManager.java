@@ -3,7 +3,9 @@ package service;
 import model.Task;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class InMemoryHistoryManager implements HistoryManager {
     private static class Node<T> {
@@ -17,6 +19,24 @@ public class InMemoryHistoryManager implements HistoryManager {
             this.next = next;
             this.prev = prev;
         }
+    }
+
+    private Node<Task> head;
+    private Node<Task> tail;
+
+    Map<Integer, Node<Task>> historyMap = new HashMap<>();
+
+    private void linkLast(Task element) {
+        final Node<Task> oldTail = tail;
+        final Node<Task> newNode = new Node<>(oldTail, element, null);
+        tail = newNode;
+        if (oldTail == null) {
+            head = newNode;
+        } else {
+            oldTail.next = newNode;
+        }
+
+        historyMap.put(newNode.data.getId(), newNode);
     }
 
     @Override
