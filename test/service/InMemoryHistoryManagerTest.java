@@ -22,9 +22,9 @@ public class InMemoryHistoryManagerTest {
     @DisplayName("Проверяем наполненность листа задачами")
     @Test
     public void shouldFullListByTask() {
-        Task task = new Task("Задача", "легкая", Status.NEW);
-        Task task1 = new Task("Задача", "легкая", Status.NEW);
-        Task task2 = new Task("Задача", "легкая", Status.NEW);
+        Task task = new Task(1,"Задача", "легкая", Status.NEW);
+        Task task1 = new Task(2,"Задача", "легкая", Status.NEW);
+        Task task2 = new Task(3,"Задача", "легкая", Status.NEW);
         historyManager.add(task);
         historyManager.add(task1);
         historyManager.add(task2);
