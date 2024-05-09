@@ -44,7 +44,7 @@ public class InMemoryTaskManagerTest {
         manager.get(1);
         manager.get(2);
         manager.deleteAll();
-        assertEquals(0,manager.getHistory().size());
+        assertEquals(0, manager.getHistory().size());
         assertEquals(0, manager.getAll().size());
     }
 
@@ -56,8 +56,8 @@ public class InMemoryTaskManagerTest {
         manager.get(1);
         manager.get(2);
         manager.delete(1);
-        assertEquals(1,manager.getHistory().size());
-        assertEquals(1,manager.getAll().size());
+        assertEquals(1, manager.getHistory().size());
+        assertEquals(1, manager.getAll().size());
     }
 
     @DisplayName("Получаем задачу из таблицы по id")
@@ -112,7 +112,7 @@ public class InMemoryTaskManagerTest {
         manager.getSubTask(2);
         manager.getSubTask(3);
         manager.deleteAllSubTask();
-        assertEquals(1,manager.getHistory().size());
+        assertEquals(1, manager.getHistory().size());
         assertEquals(0, manager.getSubTaskForEpic(epic).size());
         assertEquals(0, manager.getAllSubTask().size());
     }
@@ -124,8 +124,8 @@ public class InMemoryTaskManagerTest {
         Subtask subtask = manager.createSubTask(new Subtask("Подзадача1", "Легкая", Status.DONE, epic.getId()));
         manager.getSubTask(2);
         manager.deleteSubTask(2);
-        assertEquals(0,manager.getHistory().size());
-        assertEquals(0,manager.getAllSubTask().size());
+        assertEquals(0, manager.getHistory().size());
+        assertEquals(0, manager.getAllSubTask().size());
     }
 
     @DisplayName("Получаем подзадачу из таблицы по id")
@@ -174,7 +174,7 @@ public class InMemoryTaskManagerTest {
         manager.getEpic(1);
         manager.getEpic(2);
         manager.deleteAllEpic();
-        assertEquals(0,manager.getHistory().size());
+        assertEquals(0, manager.getHistory().size());
         assertEquals(0, manager.getAllEpic().size());
     }
 
@@ -186,8 +186,8 @@ public class InMemoryTaskManagerTest {
         manager.getEpic(2);
         manager.getEpic(1);
         manager.deleteEpic(1);
-        assertEquals(1,manager.getAllEpic().size());
-        assertEquals(1,manager.getHistory().size());
+        assertEquals(1, manager.getAllEpic().size());
+        assertEquals(1, manager.getHistory().size());
     }
 
     @DisplayName("Получаем эпик из таблицы по id")
