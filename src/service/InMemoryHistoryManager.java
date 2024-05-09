@@ -39,6 +39,16 @@ public class InMemoryHistoryManager implements HistoryManager {
         historyMap.put(newNode.data.getId(), newNode);
     }
 
+    private List<Task> getTasks() {
+        List<Task> historyList = new ArrayList<>();
+        Node<Task> current = head;
+        while (current != null) {
+            historyList.add(current.data);
+            current = current.next;
+        }
+        return historyList;
+    }
+
     @Override
     public void add(Task task) {
         if (task == null){
