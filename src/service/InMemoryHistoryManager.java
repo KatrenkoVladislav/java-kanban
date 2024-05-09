@@ -66,19 +66,19 @@ public class InMemoryHistoryManager implements HistoryManager {
         historyMap.remove(node.data.getId());
     }
 
+
     @Override
     public void add(Task task) {
-        if (task == null){
-            return;
+        if (historyMap.get(task.getId()) == null) {
+            linkLast(task);
+        } else {
+            removeNode(historyMap.get(task.getId()));
+            linkLast(task);
         }
-        if (history.size() == MAX_SIZE) {
-            history.removeFirst();
-        }
-        history.add(task);
     }
 
     @Override
-    public ArrayList<Task> getHistory() {
-        return (ArrayList<Task>) history;
+    public List<Task> getHistory() {
+        return getTasks();
     }
 }
