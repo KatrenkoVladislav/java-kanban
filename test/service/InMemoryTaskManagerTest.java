@@ -41,7 +41,10 @@ public class InMemoryTaskManagerTest {
     public void shouldDeleteAllTaskInHashmap() {
         Task task = manager.create(new Task("Задача1", "Легкая", Status.NEW));
         Task task1 = manager.create(new Task("Задача2", "Легкая", Status.DONE));
+        manager.get(1);
+        manager.get(2);
         manager.deleteAll();
+        assertEquals(0, manager.getHistory().size());
         assertEquals(0, manager.getAll().size());
     }
 
@@ -49,8 +52,12 @@ public class InMemoryTaskManagerTest {
     @Test
     public void shouldDeleteTaskForIdInHashmap() {
         Task task = manager.create(new Task("Задача1", "Легкая", Status.NEW));
+        Task task1 = manager.create(new Task("Задача2", "Легкая", Status.NEW));
+        manager.get(1);
+        manager.get(2);
         manager.delete(1);
-        assertNull(manager.get(1));
+        assertEquals(1, manager.getHistory().size());
+        assertEquals(1, manager.getAll().size());
     }
 
     @DisplayName("Получаем задачу из таблицы по id")
@@ -101,7 +108,11 @@ public class InMemoryTaskManagerTest {
         Epic epic = manager.createEpic(new Epic("Эпик", "Особый"));
         Subtask subtask = manager.createSubTask(new Subtask("Подзадача1", "Легкая", Status.DONE, epic.getId()));
         Subtask subtask1 = manager.createSubTask(new Subtask("Подзадача2", "Легкая", Status.DONE, epic.getId()));
+        manager.getEpic(1);
+        manager.getSubTask(2);
+        manager.getSubTask(3);
         manager.deleteAllSubTask();
+        assertEquals(1, manager.getHistory().size());
         assertEquals(0, manager.getSubTaskForEpic(epic).size());
         assertEquals(0, manager.getAllSubTask().size());
     }
@@ -111,8 +122,10 @@ public class InMemoryTaskManagerTest {
     public void shouldDeleteSubtaskByIdFromInHashmap() {
         Epic epic = manager.createEpic(new Epic("Эпик", "Особый"));
         Subtask subtask = manager.createSubTask(new Subtask("Подзадача1", "Легкая", Status.DONE, epic.getId()));
+        manager.getSubTask(2);
         manager.deleteSubTask(2);
-        assertNull(manager.getSubTask(2));
+        assertEquals(0, manager.getHistory().size());
+        assertEquals(0, manager.getAllSubTask().size());
     }
 
     @DisplayName("Получаем подзадачу из таблицы по id")
@@ -158,7 +171,10 @@ public class InMemoryTaskManagerTest {
     public void shouldDeleteAllEpicInHashmap() {
         Epic epic = manager.createEpic(new Epic("Эпик1", "Особый"));
         Epic epic1 = manager.createEpic(new Epic("Эпик2", "Особый"));
+        manager.getEpic(1);
+        manager.getEpic(2);
         manager.deleteAllEpic();
+        assertEquals(0, manager.getHistory().size());
         assertEquals(0, manager.getAllEpic().size());
     }
 
@@ -166,8 +182,12 @@ public class InMemoryTaskManagerTest {
     @Test
     public void shouldDeleteEpicByIdFromInHashmap() {
         Epic epic = manager.createEpic(new Epic("Эпик", "Особый"));
+        Epic epic1 = manager.createEpic(new Epic("Эпик1", "Особый"));
+        manager.getEpic(2);
+        manager.getEpic(1);
         manager.deleteEpic(1);
-        assertNull(manager.getEpic(1));
+        assertEquals(1, manager.getAllEpic().size());
+        assertEquals(1, manager.getHistory().size());
     }
 
     @DisplayName("Получаем эпик из таблицы по id")
