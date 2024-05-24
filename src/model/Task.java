@@ -6,6 +6,7 @@ public class Task {
     private int id;
     private String title;
     private String description;
+
     protected Status status;
 
     public Task(int id, String title, String description, Status status) {
@@ -19,6 +20,14 @@ public class Task {
         this.title = title;
         this.description = description;
         this.status = status;
+    }
+
+    public TaskType getTypeTask() {
+        return TaskType.TASK;
+    }
+
+    public Integer getEpicId() {
+        return null;
     }
 
     public String getDescription() {
