@@ -1,9 +1,12 @@
-
-import model.Task;
+import model.Epic;
 import model.Status;
 import model.Subtask;
-import model.Epic;
-import service.*;
+import model.Task;
+import service.FileBackedTaskManager;
+import service.Manager;
+import service.TaskManager;
+
+import java.io.File;
 
 public class Main {
 
@@ -20,28 +23,10 @@ public class Main {
 
         Epic epic2 = manager.createEpic(new Epic("Эпик2", "Особый"));
 
-        manager.getEpic(epic2.getId());
-        System.out.println(manager.getHistory());
-        manager.get(task2.getId());
-        System.out.println(manager.getHistory());
-        manager.getEpic(epic1.getId());
-        System.out.println(manager.getHistory());
-        manager.getSubTask(subtask2.getId());
-        System.out.println(manager.getHistory());
-        manager.getSubTask(subtask1.getId());
-        System.out.println(manager.getHistory());
-        manager.getEpic(epic2.getId());
-        System.out.println(manager.getHistory());
-        manager.getSubTask(subtask3.getId());
-        System.out.println(manager.getHistory());
-        manager.get(task1.getId());
-        System.out.println(manager.getHistory());
-        manager.get(task1.getId());
-        System.out.println(manager.getHistory());
-        manager.delete(task2.getId());
-        System.out.println(manager.getHistory());
-        manager.deleteEpic(epic1.getId());
-        System.out.println(manager.getHistory());
+        TaskManager taskManagerReloud = FileBackedTaskManager.loadFromFile(new File("task.csv"));
+        if (manager.get(1).getId() == taskManagerReloud.get(1).getId()) {
+            System.out.println("Задачи совпадают");
+        }
 
 
     }
