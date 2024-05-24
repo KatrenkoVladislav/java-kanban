@@ -1,5 +1,6 @@
 package service;
 
+import exception.ManagerSaveException;
 import model.Epic;
 import model.Status;
 import model.Subtask;
@@ -10,11 +11,11 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class InMemoryTaskManager implements TaskManager {
-    private final Map<Integer, Task> tasks;
-    private final Map<Integer, Subtask> subTasks;
-    private final Map<Integer, Epic> epics;
-    private final HistoryManager historyManager;
-    private int seq = 0;
+    protected final Map<Integer, Task> tasks;
+    protected final Map<Integer, Subtask> subTasks;
+    protected final Map<Integer, Epic> epics;
+    protected final HistoryManager historyManager;
+    protected int seq = 0;
 
     public InMemoryTaskManager(HistoryManager historyManager) {
         this.historyManager = historyManager;
@@ -55,7 +56,7 @@ public class InMemoryTaskManager implements TaskManager {
     public void update(Task task) {
         Task savedTask = tasks.get(task.getId());
         if (savedTask == null) {
-            return;
+            throw new ManagerSaveException("Такой задачи нет");
         }
         tasks.put(task.getId(), task);
     }
@@ -104,7 +105,7 @@ public class InMemoryTaskManager implements TaskManager {
     public Subtask createSubTask(Subtask subtask) {
         Epic epic = epics.get(subtask.getEpicId());
         if (epic == null) {
-            return null;
+            throw new ManagerSaveException("Такого эпика нет");
         }
         subtask.setId(generateId());
         subTasks.put(subtask.getId(), subtask);
@@ -116,11 +117,11 @@ public class InMemoryTaskManager implements TaskManager {
     @Override
     public Subtask updateSubTask(Subtask subtask) {
         if (subtask == null) {
-            return null;
+            throw new ManagerSaveException("Такой подзадачи нет");
         }
         Epic epic = epics.get(subtask.getEpicId());
         if (epic == null) {
-            return null;
+            throw new ManagerSaveException("Такой задачи нет");
         }
         subTasks.put(subtask.getId(), subtask);
         epic.addTask(subtask.getId());
@@ -140,7 +141,7 @@ public class InMemoryTaskManager implements TaskManager {
     public void updateEpic(Epic epic) {
         final Epic saved = epics.get(epic.getId());
         if (saved == null) {
-            return;
+            throw new ManagerSaveException("Такой задачи нет");
         }
         epic.setSubTasksId(saved.getSubtasks());
         epic.setStatus(saved.getStatus());

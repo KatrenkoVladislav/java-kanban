@@ -1,5 +1,6 @@
 package service;
 
+import exception.ManagerSaveException;
 import model.Task;
 
 import java.util.ArrayList;
@@ -29,7 +30,7 @@ public class InMemoryHistoryManager implements HistoryManager {
     @Override
     public void add(Task task) {
         if (task == null) {
-            return;
+            throw new ManagerSaveException("Не найдена задача");
         }
         final int id = task.getId();
         remove(id);
