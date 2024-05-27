@@ -13,7 +13,6 @@ import java.util.Map;
 public class FileBackedTaskManager extends InMemoryTaskManager {
     private final File file;
 
-    private final String HEADER = "id,type,title,status,description,epic";
     public FileBackedTaskManager(File file) {
         this(Manager.getDefaultHistory(), file);
     }
@@ -139,6 +138,7 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
 
     private void save() {
         try (final BufferedWriter writer = new BufferedWriter(new FileWriter(file))) {
+            final String HEADER = "id,type,title,status,description,epic";
             writer.append(HEADER);
             writer.newLine();
             for (Map.Entry<Integer, Task> entry : tasks.entrySet()) {
