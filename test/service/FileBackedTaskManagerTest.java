@@ -14,8 +14,8 @@ public class FileBackedTaskManagerTest {
     @DisplayName("Проверяем сохранение и загрузку задачи в файл")
     @Test
     public void saveAndLoadingTaskInFile() {
-        TaskManager manager = Manager.getDefault();
-        manager = new FileBackedTaskManager(Manager.getDefaultHistory(), new File("test.csv"));
+        //TaskManager manager = Manager.getDefault();
+        TaskManager manager = new FileBackedTaskManager(Manager.getDefaultHistory(), new File("test/resources/test.csv"));
         Task task1 = manager.create(new Task("Задача", "Легкая", Status.NEW));
         TaskManager managerLoading = FileBackedTaskManager.loadFromFile(new File("test.csv"));
         Task task2 = managerLoading.get(1);

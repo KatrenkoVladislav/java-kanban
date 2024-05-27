@@ -6,12 +6,14 @@ import model.*;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Paths;
 import java.util.Map;
 
 
 public class FileBackedTaskManager extends InMemoryTaskManager {
     private final File file;
 
+    private final String HEADER = "id,type,title,status,description,epic";
     public FileBackedTaskManager(File file) {
         this(Manager.getDefaultHistory(), file);
     }
@@ -23,7 +25,7 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
 
     public FileBackedTaskManager(HistoryManager historyManager) {
         super(historyManager);
-        file = new File("resources/task.csv");
+        file = Paths.get("resources/task.csv").toFile();
     }
 
 
@@ -137,7 +139,7 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
 
     private void save() {
         try (final BufferedWriter writer = new BufferedWriter(new FileWriter(file))) {
-            writer.append("id,type,title,status,description,epic");
+            writer.append(HEADER);
             writer.newLine();
             for (Map.Entry<Integer, Task> entry : tasks.entrySet()) {
                 writer.append(TaskConverter.toString(entry.getValue()));
