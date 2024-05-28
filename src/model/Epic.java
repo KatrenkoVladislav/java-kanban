@@ -10,7 +10,6 @@ public class Epic extends Task {
     }
 
     public Epic(String title, String description) {
-
         super(title, description, Status.NEW);
     }
 
@@ -31,6 +30,15 @@ public class Epic extends Task {
         subTasksId.remove(subtask1);
     }
 
+    @Override
+    public Integer getEpicId() {
+        return null;
+    }
+
+    @Override
+    public TaskType getTypeTask() {
+        return TaskType.EPIC;
+    }
 
     @Override
     public String toString() {
