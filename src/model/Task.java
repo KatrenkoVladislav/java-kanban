@@ -1,5 +1,7 @@
 package model;
 
+import java.time.Duration;
+import java.time.LocalDateTime;
 import java.util.Objects;
 
 public class Task {
@@ -8,18 +10,45 @@ public class Task {
     private String description;
 
     protected Status status;
+    private LocalDateTime startTime;
+    private Duration duration;
+    private LocalDateTime endTime;
 
     public Task(int id, String title, String description, Status status) {
         this.id = id;
         this.title = title;
         this.description = description;
         this.status = status;
+
+
     }
 
+    public Task(int id, String title, String description, Status status, LocalDateTime startTime, Duration duration) {
+        this.id = id;
+        this.title = title;
+        this.description = description;
+        this.status = status;
+        this.startTime = startTime;
+        this.duration = duration;
+
+
+    }
+
+    public Task(String title, String description, Status status, LocalDateTime startTime, Duration duration) {
+        this.title = title;
+        this.description = description;
+        this.status = status;
+        this.startTime = startTime;
+        this.duration = duration;
+        this.endTime = startTime.plus(duration);
+    }
     public Task(String title, String description, Status status) {
         this.title = title;
         this.description = description;
         this.status = status;
+        this.startTime = LocalDateTime.now();
+        this.duration = Duration.ofMinutes(15);
+        this.endTime = startTime.plus(duration);
     }
 
     public TaskType getTypeTask() {
@@ -54,6 +83,30 @@ public class Task {
         this.title = title;
     }
 
+    public LocalDateTime getStartTime() {
+        return startTime;
+    }
+
+    public void setStartTime(LocalDateTime startTime) {
+        this.startTime = startTime;
+    }
+
+    public Duration getDuration() {
+        return duration;
+    }
+
+    public void setDuration(Duration duration) {
+        this.duration = duration;
+    }
+
+    public LocalDateTime getEndTime() {
+        return endTime;
+    }
+
+    public void setEndTime(LocalDateTime endTime) {
+        this.endTime = endTime;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -73,7 +126,10 @@ public class Task {
                 "id=" + id +
                 ", title='" + title + '\'' +
                 ", description='" + description + '\'' +
-                ", status=" + status +
+                ", status=" + status + '\'' +
+                ", startTime=" + startTime + '\'' +
+                ", duration=" + duration + '\'' +
+                ", endTime=" + endTime +
                 '}';
     }
 
