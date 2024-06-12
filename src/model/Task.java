@@ -42,6 +42,7 @@ public class Task {
         this.duration = duration;
         this.endTime = startTime.plus(duration);
     }
+
     public Task(String title, String description, Status status) {
         this.title = title;
         this.description = description;
