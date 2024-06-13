@@ -12,7 +12,7 @@ public class Task {
     protected Status status;
     private LocalDateTime startTime;
     private Duration duration;
-    private LocalDateTime endTime;
+
 
     public Task(int id, String title, String description, Status status) {
         this.id = id;
@@ -40,7 +40,7 @@ public class Task {
         this.status = status;
         this.startTime = startTime;
         this.duration = duration;
-        this.endTime = startTime.plus(duration);
+
     }
 
     public Task(String title, String description, Status status) {
@@ -49,7 +49,7 @@ public class Task {
         this.status = status;
         this.startTime = LocalDateTime.now();
         this.duration = Duration.ofMinutes(15);
-        this.endTime = startTime.plus(duration);
+
     }
 
     public TaskType getTypeTask() {
@@ -101,11 +101,7 @@ public class Task {
     }
 
     public LocalDateTime getEndTime() {
-        return endTime;
-    }
-
-    public void setEndTime(LocalDateTime endTime) {
-        this.endTime = endTime;
+        return startTime.plus(duration);
     }
 
     @Override
@@ -130,7 +126,7 @@ public class Task {
                 ", status=" + status + '\'' +
                 ", startTime=" + startTime + '\'' +
                 ", duration=" + duration + '\'' +
-                ", endTime=" + endTime +
+                ", endTime=" + getEndTime() +
                 '}';
     }
 

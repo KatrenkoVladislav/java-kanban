@@ -16,7 +16,7 @@ public class InMemoryTaskManager implements TaskManager {
     protected final Map<Integer, Task> tasks;
     protected final Map<Integer, Subtask> subTasks;
     protected final Map<Integer, Epic> epics;
-    TreeSet<Task> prioritizedTasks = new TreeSet<>(Comparator.comparing(Task::getStartTime));
+    protected final TreeSet<Task> prioritizedTasks = new TreeSet<>(Comparator.comparing(Task::getStartTime));
     protected final HistoryManager historyManager;
     protected int seq = 0;
 
@@ -246,15 +246,40 @@ public class InMemoryTaskManager implements TaskManager {
     }
 
     private void calculateEpic(int epicId) {
-        Duration durationEpic = Duration.ofMinutes(0);
-        LocalDateTime epicStartTime = LocalDateTime.now();
-        LocalDateTime epicEndTime = LocalDateTime.now();
+        Epic epic = epics.get(epicId);
+        updateEpicStatus(epic);
+        updateEpicTime(epic);
+    }
+
+    private void updateEpicStatus(Epic epic) {
         boolean allDone = true;
         boolean allNew = true;
-        Epic epic = epics.get(epicId);
         if (epic.getSubtasks() == null || epic.getSubtasks().isEmpty()) {
             epic.setStatus(Status.NEW);
         }
+        for (int subtask : epic.getSubtasks()) {
+            Subtask subtask1 = subTasks.get(subtask);
+            if (subtask1.getStatus() != Status.DONE) {
+                allDone = false;
+            }
+            if (subtask1.getStatus() != Status.NEW) {
+                allNew = false;
+            }
+        }
+        if (allDone) {
+            epic.setStatus(Status.DONE);
+        } else if (allNew) {
+            epic.setStatus(Status.NEW);
+        } else {
+            epic.setStatus(Status.IN_PROGRESS);
+        }
+
+    }
+
+    private void updateEpicTime(Epic epic) {
+        Duration durationEpic = Duration.ofMinutes(0);
+        LocalDateTime epicStartTime = LocalDateTime.now();
+        LocalDateTime epicEndTime = LocalDateTime.now();
         for (int subtask : epic.getSubtasks()) {
             Subtask subtask1 = subTasks.get(subtask);
             if (subtask1.getStartTime().isBefore(epicStartTime)) {
@@ -265,24 +290,12 @@ public class InMemoryTaskManager implements TaskManager {
                 epicEndTime = subtask1.getEndTime();
             }
 
-            if (subtask1.getStatus() != Status.DONE) {
-                allDone = false;
-            }
-            if (subtask1.getStatus() != Status.NEW) {
-                allNew = false;
-            }
         }
         epic.setStartTime(epicStartTime);
         epic.setEndTime(epicEndTime);
         epic.setDuration(durationEpic);
-        if (allDone) {
-            epic.setStatus(Status.DONE);
-        } else if (allNew) {
-            epic.setStatus(Status.NEW);
-        } else {
-            epic.setStatus(Status.IN_PROGRESS);
-        }
     }
+
 
     private void checkTaskTime(Task task) {
         prioritizedTasks.stream()

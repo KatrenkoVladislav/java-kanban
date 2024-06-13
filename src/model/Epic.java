@@ -7,6 +7,8 @@ import java.util.ArrayList;
 public class Epic extends Task {
     private ArrayList<Integer> subTasksId = new ArrayList<>();
 
+    private LocalDateTime endTime;
+
     public Epic(int id, String title, String description, LocalDateTime startTime, Duration duration) {
         super(id, title, description, Status.NEW, startTime, duration);
     }
@@ -36,6 +38,10 @@ public class Epic extends Task {
         subTasksId.remove(subtask1);
     }
 
+    public void setEndTime(LocalDateTime endTime) {
+        this.endTime = endTime;
+    }
+
     @Override
     public Integer getEpicId() {
         return null;
@@ -55,7 +61,7 @@ public class Epic extends Task {
                 ", status=" + status + '\'' +
                 ", startTime" + getStartTime() + '\'' +
                 ", duration" + getDuration() + '\'' +
-                ", endTime" + getEndTime() + '\'' +
+                ", endTime" + endTime + '\'' +
                 "} SubTask=" + subTasksId +
                 '}';
     }
