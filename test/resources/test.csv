@@ -1,2 +1,2 @@
-id,type,title,status,description,epic
-1,TASK,Задача,NEW,Легкая,null
+id,type,title,status,description,epic,startTime,duration
+1,TASK,Задача,NEW,Легкая,null,2024-06-12T17:23:04.713863200,PT15M

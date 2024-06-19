@@ -1,12 +1,14 @@
 package service;
 
 import converter.TaskConverter;
-import exception.ManagerSaveException;
+import exception.ManagerIOException;
 import model.*;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Paths;
+import java.time.Duration;
+import java.time.LocalDateTime;
 import java.util.Map;
 
 
@@ -117,19 +119,21 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
         String title = valueTask[2];
         String description = valueTask[4];
         Status status = Status.valueOf(valueTask[3]);
+        LocalDateTime startTime = LocalDateTime.parse(valueTask[6]);
+        Duration duration = Duration.parse(valueTask[7]);
 
         TaskType taskType = TaskType.valueOf(valueTask[1]);
         Task task = null;
         switch (taskType) {
             case TASK:
-                task = new Task(id, title, description, status);
+                task = new Task(id, title, description, status, startTime, duration);
                 break;
             case SUBTASK:
                 int epicId = Integer.parseInt(valueTask[5]);
-                task = new Subtask(id, title, description, status, epicId);
+                task = new Subtask(id, title, description, status, epicId, startTime, duration);
                 break;
             case EPIC:
-                task = new Epic(id, title, description);
+                task = new Epic(id, title, description, startTime, duration);
                 break;
 
         }
@@ -138,7 +142,7 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
 
     private void save() {
         try (final BufferedWriter writer = new BufferedWriter(new FileWriter(file))) {
-            final String HEADER = "id,type,title,status,description,epic";
+            final String HEADER = "id,type,title,status,description,epic,startTime,duration";
             writer.append(HEADER);
             writer.newLine();
             for (Map.Entry<Integer, Task> entry : tasks.entrySet()) {
@@ -154,7 +158,7 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
                 writer.newLine();
             }
         } catch (IOException e) {
-            throw new ManagerSaveException("Ошибка в файле: " + file.getAbsolutePath());
+            throw new ManagerIOException("Ошибка в файле: " + file.getAbsolutePath());
         }
     }
 
@@ -168,10 +172,13 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
                 final int id = task.getId();
                 if (task.getTypeTask() == TaskType.TASK) {
                     tasks.put(id, task);
+                    prioritizedTasks.add(task);
                 } else if (task.getTypeTask() == TaskType.SUBTASK) {
                     subTasks.put(id, (Subtask) task);
+                    prioritizedTasks.add(task);
                 } else if (task.getTypeTask() == TaskType.EPIC) {
                     epics.put(id, (Epic) task);
+                    prioritizedTasks.add(task);
                 }
                 if (maxId < id) {
                     maxId = id;
@@ -183,7 +190,7 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
             }
             seq = maxId;
         } catch (IOException e) {
-            throw new ManagerSaveException("Нет такого файла" + file);
+            throw new ManagerIOException("Нет такого файла" + file);
         }
     }
 }
