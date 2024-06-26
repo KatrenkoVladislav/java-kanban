@@ -34,6 +34,17 @@ public class Task {
 
     }
 
+    public Task(int id, String title, String description, Status status, LocalDateTime startTime, Duration duration) {
+        this.id = id;
+        this.title = title;
+        this.description = description;
+        this.status = status;
+        this.startTime = startTime;
+        this.duration = duration;
+
+
+    }
+
     public Task(String title, String description, Status status, LocalDateTime startTime, int duration) {
         this.title = title;
         this.description = description;
@@ -51,6 +62,7 @@ public class Task {
         this.duration = Duration.ofMinutes(15);
 
     }
+
 
     public TaskType getTypeTask() {
         return TaskType.TASK;

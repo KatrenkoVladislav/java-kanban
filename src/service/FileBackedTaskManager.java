@@ -7,6 +7,7 @@ import model.*;
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Paths;
+import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.Map;
 
@@ -119,7 +120,7 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
         String description = valueTask[4];
         Status status = Status.valueOf(valueTask[3]);
         LocalDateTime startTime = LocalDateTime.parse(valueTask[6]);
-        int duration = Integer.parseInt(valueTask[7]);
+        Duration duration = Duration.parse(valueTask[7]);
 
         TaskType taskType = TaskType.valueOf(valueTask[1]);
         Task task = null;

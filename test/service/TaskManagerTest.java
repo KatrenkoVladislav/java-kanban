@@ -5,7 +5,6 @@ import model.Epic;
 import model.Status;
 import model.Subtask;
 import model.Task;
-import org.junit.Assert;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -296,7 +295,7 @@ abstract class TaskManagerTest<T extends TaskManager> {
         Task task1 = manager.create(new Task("Задача", "Легкая", Status.NEW));
         TaskManager managerLoading = FileBackedTaskManager.loadFromFile(new File("resources/task.csv"));
         Task task2 = managerLoading.get(1);
-        Assert.assertEquals(task1, task2);
+        assertEquals(task1, task2);
     }
 
     @DisplayName("Проверяем пересечение задач")
