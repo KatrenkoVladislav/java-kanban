@@ -13,7 +13,6 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.EnumSource;
 
 import java.io.File;
-import java.time.Duration;
 import java.time.LocalDateTime;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -44,7 +43,7 @@ abstract class TaskManagerTest<T extends TaskManager> {
     @Test
     public void shouldDeleteAllTaskInHashmap() {
         Task task = manager.create(new Task("Задача1", "Легкая", Status.NEW,
-                LocalDateTime.of(2024, 6, 10, 0, 0), Duration.ofMinutes(10)));
+                LocalDateTime.of(2024, 6, 10, 0, 0), 10));
         Task task1 = manager.create(new Task("Задача2", "Легкая", Status.DONE));
         manager.get(1);
         manager.get(2);
@@ -57,7 +56,7 @@ abstract class TaskManagerTest<T extends TaskManager> {
     @Test
     public void shouldDeleteTaskForIdInHashmap() {
         Task task = manager.create(new Task("Задача1", "Легкая", Status.NEW,
-                LocalDateTime.of(2024, 6, 10, 0, 0), Duration.ofMinutes(10)));
+                LocalDateTime.of(2024, 6, 10, 0, 0), 10));
         Task task1 = manager.create(new Task("Задача2", "Легкая", Status.NEW));
         manager.get(1);
         manager.get(2);
@@ -79,7 +78,7 @@ abstract class TaskManagerTest<T extends TaskManager> {
     @Test
     public void shouldGetAllTaskFromHashmap() {
         Task task = manager.create(new Task("Задача1", "Легкая", Status.NEW,
-                LocalDateTime.of(2024, 6, 10, 0, 0), Duration.ofMinutes(10)));
+                LocalDateTime.of(2024, 6, 10, 0, 0), 10));
         Task task1 = manager.create(new Task("Задача1", "Легкая", Status.NEW));
         manager.getAll();
         assertEquals(2, manager.getAll().size());
@@ -114,7 +113,7 @@ abstract class TaskManagerTest<T extends TaskManager> {
     public void shouldDeleteAllSubtaskInHashmapInEpic() {
         Epic epic = manager.createEpic(new Epic("Эпик", "Особый"));
         Subtask subtask = manager.createSubTask(new Subtask("Подзадача1", "Легкая", Status.DONE, epic.getId(),
-                LocalDateTime.of(2024, 6, 10, 0, 0), Duration.ofMinutes(10)));
+                LocalDateTime.of(2024, 6, 10, 0, 0), 10));
         Subtask subtask1 = manager.createSubTask(new Subtask("Подзадача2", "Легкая", Status.DONE, epic.getId()));
         manager.getEpic(1);
         manager.getSubTask(2);
@@ -151,7 +150,7 @@ abstract class TaskManagerTest<T extends TaskManager> {
     public void shouldGetAllSubtaskFromHashmap() {
         Epic epic = manager.createEpic(new Epic("Эпик", "Особый"));
         Subtask subtask = manager.createSubTask(new Subtask("Подзадача1", "Легкая", Status.DONE, epic.getId(),
-                LocalDateTime.of(2024, 6, 10, 0, 0), Duration.ofMinutes(10)));
+                LocalDateTime.of(2024, 6, 10, 0, 0), 10));
         Subtask subtask1 = manager.createSubTask(new Subtask("Подзадача2", "Легкая", Status.DONE, epic.getId()));
         manager.getAllSubTask();
         assertEquals(2, manager.getAllSubTask().size());
@@ -179,7 +178,7 @@ abstract class TaskManagerTest<T extends TaskManager> {
     @Test
     public void shouldDeleteAllEpicInHashmap() {
         Epic epic = manager.createEpic(new Epic("Эпик1", "Особый",
-                LocalDateTime.of(2024, 6, 10, 0, 0), Duration.ofMinutes(10)));
+                LocalDateTime.of(2024, 6, 10, 0, 0), 10));
         Epic epic1 = manager.createEpic(new Epic("Эпик2", "Особый"));
         manager.getEpic(1);
         manager.getEpic(2);
@@ -224,7 +223,7 @@ abstract class TaskManagerTest<T extends TaskManager> {
     public void shouldGetAllSubtaskByEpic() {
         Epic epic = manager.createEpic(new Epic("Эпик", "Особый"));
         Subtask subtask = manager.createSubTask(new Subtask("Подзадача1", "Легкая", Status.NEW, epic.getId(),
-                LocalDateTime.of(2024, 6, 10, 0, 0), Duration.ofMinutes(10)));
+                LocalDateTime.of(2024, 6, 10, 0, 0), 10));
         Subtask subtask1 = manager.createSubTask(new Subtask("Подзадача2", "Легкая", Status.DONE, epic.getId()));
         manager.getSubTaskForEpic(epic);
         assertEquals(2, manager.getSubTaskForEpic(epic).size());
@@ -236,9 +235,9 @@ abstract class TaskManagerTest<T extends TaskManager> {
         Task task = manager.create(new Task("Задача1", "Легкая", Status.NEW));
         Epic epic = manager.createEpic(new Epic("Эпик", "Особый"));
         Subtask subtask = manager.createSubTask(new Subtask("Подзадача1", "Легкая", Status.NEW, epic.getId(),
-                LocalDateTime.of(2024, 6, 10, 0, 0), Duration.ofMinutes(10)));
+                LocalDateTime.of(2024, 6, 10, 0, 0), 10));
         Subtask subtask1 = manager.createSubTask(new Subtask("Подзадача2", "Легкая", Status.DONE, epic.getId(),
-                LocalDateTime.of(2024, 6, 10, 2, 0), Duration.ofMinutes(10)));
+                LocalDateTime.of(2024, 6, 10, 2, 0), 10));
         manager.get(1);
         manager.getEpic(2);
         manager.getSubTask(3);
@@ -251,7 +250,7 @@ abstract class TaskManagerTest<T extends TaskManager> {
     public void shouldCheckStatusEpicByChangStatusSubtask() {
         Epic epic = manager.createEpic(new Epic("Эпик", "Особый"));
         Subtask subtask = manager.createSubTask(new Subtask("Подзадача1", "Легкая", Status.NEW, epic.getId(),
-                LocalDateTime.of(2024, 6, 10, 0, 0), Duration.ofMinutes(10)));
+                LocalDateTime.of(2024, 6, 10, 0, 0), 10));
         Subtask subtask1 = manager.createSubTask(new Subtask("Подзадача2", "Легкая", Status.NEW, epic.getId()));
         subtask1.setStatus(Status.DONE);
         manager.updateSubTask(subtask1);
@@ -275,7 +274,7 @@ abstract class TaskManagerTest<T extends TaskManager> {
         Epic epic = new Epic("Эпик", "Сложный");
         manager.createEpic(epic);
         Subtask subtask = manager.createSubTask(new Subtask("Подзадача1", "обычная", status, epic.getId(),
-                LocalDateTime.of(2024, 6, 11, 0, 0), Duration.ofMinutes(5)));
+                LocalDateTime.of(2024, 6, 11, 0, 0), 10));
         Subtask subtask1 = manager.createSubTask(new Subtask("Подзадача2", "обычная", status, epic.getId()));
         assertEquals(status, epic.getStatus());
     }
@@ -286,7 +285,7 @@ abstract class TaskManagerTest<T extends TaskManager> {
         Epic epic = new Epic("Эпик", "Сложный");
         manager.createEpic(epic);
         Subtask subtask = manager.createSubTask(new Subtask("Подзадача1", "обычная", Status.NEW, epic.getId(),
-                LocalDateTime.of(2024, 6, 11, 0, 0), Duration.ofMinutes(5)));
+                LocalDateTime.of(2024, 6, 11, 0, 0), 10));
         Subtask subtask1 = manager.createSubTask(new Subtask("Подзадача2", "обычная", Status.DONE, epic.getId()));
         assertEquals(Status.IN_PROGRESS, epic.getStatus());
     }

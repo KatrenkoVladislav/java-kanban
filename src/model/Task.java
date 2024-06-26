@@ -23,23 +23,23 @@ public class Task {
 
     }
 
-    public Task(int id, String title, String description, Status status, LocalDateTime startTime, Duration duration) {
+    public Task(int id, String title, String description, Status status, LocalDateTime startTime, int duration) {
         this.id = id;
         this.title = title;
         this.description = description;
         this.status = status;
         this.startTime = startTime;
-        this.duration = duration;
+        this.duration = Duration.ofMinutes(duration);
 
 
     }
 
-    public Task(String title, String description, Status status, LocalDateTime startTime, Duration duration) {
+    public Task(String title, String description, Status status, LocalDateTime startTime, int duration) {
         this.title = title;
         this.description = description;
         this.status = status;
         this.startTime = startTime;
-        this.duration = duration;
+        this.duration = Duration.ofMinutes(duration);
 
     }
 
