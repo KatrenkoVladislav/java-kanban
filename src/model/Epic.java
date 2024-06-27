@@ -5,9 +5,13 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 public class Epic extends Task {
-    private ArrayList<Integer> subTasksId = new ArrayList<>();
+    private transient ArrayList<Integer> subTasksId = new ArrayList<>();
 
     private LocalDateTime endTime;
+
+    public Epic(int id, String title, String description, LocalDateTime startTime, int duration) {
+        super(id, title, description, Status.NEW, startTime, duration);
+    }
 
     public Epic(int id, String title, String description, LocalDateTime startTime, Duration duration) {
         super(id, title, description, Status.NEW, startTime, duration);
@@ -17,7 +21,7 @@ public class Epic extends Task {
         super(title, description, Status.NEW);
     }
 
-    public Epic(String title, String description, LocalDateTime localDateTime, Duration duration) {
+    public Epic(String title, String description, LocalDateTime localDateTime, int duration) {
         super(title, description, Status.NEW, localDateTime, duration);
     }
 
