@@ -18,7 +18,6 @@ public class SubTaskHandler extends BaseHttpHandler {
     public void handle(HttpExchange exchange) {
         System.out.println("Началась обработка Задачи");
         try (exchange) {
-
             String path = exchange.getRequestURI().getPath();
             String method = exchange.getRequestMethod();
             String[] pathParts = path.split("/");

@@ -6,6 +6,7 @@ import model.Epic;
 import server.HttpMethod;
 import service.TaskManager;
 
+import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,7 +17,7 @@ public class EpicHandler extends BaseHttpHandler {
         super(taskManager);
     }
 
-    public void handle(HttpExchange exchange) {
+    public void handle(HttpExchange exchange) throws IOException {
         System.out.println("Началась обработка Эпика");
 
         String path = exchange.getRequestURI().getPath();

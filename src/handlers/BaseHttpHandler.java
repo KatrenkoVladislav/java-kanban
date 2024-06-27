@@ -17,7 +17,6 @@ import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.time.Duration;
 import java.time.LocalDateTime;
-import java.util.Optional;
 
 public abstract class BaseHttpHandler implements HttpHandler {
     private static final Charset DEFAULT_CHARSET = StandardCharsets.UTF_8;
@@ -51,21 +50,20 @@ public abstract class BaseHttpHandler implements HttpHandler {
         return gsonBuilder.create();
     }
 
-    protected Optional<Integer> getId(String pathPart) {
+    protected Integer getId(String pathPart) {
         int id = Integer.parseInt(pathPart);
         if (id == -1) {
             throw new NotFoundException("Нет данных с id: " + id);
         } else {
-            return Optional.of(id);
+            return id;
         }
     }
 
     protected int getIdFromPath(String pathPart) {
-        Optional<Integer> idFromPath = getId(pathPart);
-        return idFromPath.orElse(-1);
+        return getId(pathPart);
     }
 
-    protected void exception(HttpExchange exchange, Exception exception) {
+    protected void exception(HttpExchange exchange, Exception exception) throws IOException {
         try {
             switch (exception) {
                 case NotFoundException e -> writeResponse(exchange, HttpError.HTTP_NOT_FOUND_ERROR.toString(), 404);

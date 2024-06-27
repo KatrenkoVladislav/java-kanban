@@ -16,15 +16,10 @@ public class TaskHandler extends BaseHttpHandler {
 
     @Override
     public void handle(HttpExchange exchange) throws IOException {
-        try {
-
-
             String path = exchange.getRequestURI().getPath();
             String method = exchange.getRequestMethod();
             String[] params = path.split("/");
             try {
-
-
                 switch (method) {
                     case HttpMethod.GET:
                         if (params.length == 2) {
@@ -62,8 +57,5 @@ public class TaskHandler extends BaseHttpHandler {
             } catch (Exception exception) {
                 exception(exchange, exception);
             }
-        } catch (Exception e) {
-            e.printStackTrace(System.out);
-        }
     }
 }
