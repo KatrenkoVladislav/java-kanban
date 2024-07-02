@@ -4,7 +4,6 @@ import model.Subtask;
 import service.Manager;
 import service.TaskManager;
 
-import java.time.Duration;
 import java.time.LocalDateTime;
 
 public class Main {
@@ -28,11 +27,11 @@ public class Main {
         Task task2 = manager.create(new Task("Задача2", "Обычная", Status.NEW));*/
 
         Epic epic1 = manager.createEpic(new Epic("Эпик1", "Особый",
-                LocalDateTime.of(2024, 6, 5, 20, 0), Duration.ofMinutes(0)));
+                LocalDateTime.of(2024, 6, 5, 20, 0), 0));
         Subtask subtask1 = manager.createSubTask(new Subtask("Подзадача1", "Легкая", Status.DONE, epic1.getId(),
-                LocalDateTime.of(2024, 6, 6, 21, 50), Duration.ofMinutes(30)));
+                LocalDateTime.of(2024, 6, 6, 21, 50), 30));
         Subtask subtask2 = manager.createSubTask(new Subtask("Подзадача2", "Легкая", Status.DONE, epic1.getId(),
-                LocalDateTime.of(2024, 6, 6, 21, 0), Duration.ofMinutes(30)));
+                LocalDateTime.of(2024, 6, 6, 21, 0), 30));
         Subtask subtask3 = manager.createSubTask(new Subtask("Подзадача3", "Легкая", Status.DONE, epic1.getId()));
         System.out.println(epic1);
 

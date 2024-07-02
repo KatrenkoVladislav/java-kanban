@@ -1,6 +1,2 @@
 id,type,title,status,description,epic,startTime,duration
-1,EPIC,Эпик1,DONE,Особый,null,2024-06-06T21:00,PT1H15M
-5,EPIC,Эпик2,DONE,Особый,null,2024-06-13T20:16:51.742572,PT0S
-2,SUBTASK,Подзадача1,DONE,Легкая,1,2024-06-06T21:50,PT30M
-3,SUBTASK,Подзадача2,DONE,Легкая,1,2024-06-06T21:00,PT30M
-4,SUBTASK,Подзадача3,DONE,Легкая,1,2024-06-13T20:16:51.740572300,PT15M
+1,TASK,Задача,NEW,Описание,null,2024-07-13T18:38:20,PT15M
